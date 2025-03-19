@@ -30,24 +30,25 @@ export class ConvertService {
 
       const convertedAmt = (dto.amount / from) * to;
       const rate = to / from;
-https://openexchangerates.org/api/convert/19999.95/GBP/EUR?app_id=YOUR_APP_ID
-      //  const newTransaction = await this.primsaService.usertransaction.create(
-      //    {
-      //      data: {
-      //        toCurrency: '',
-      //        fromCurrency: '',
-      //        result: 1,
-      //        rate:2,
-      //        amount: 2,
-      //        userId:1
-      //      },
-      //    },
-      //  );
+
+       const newTransaction = await this.primsaService.usertransaction.create(
+         {
+           data: {
+             toCurrency: dto.to,
+             fromCurrency: dto.from,
+             result: convertedAmt,
+             rate,
+             amount: dto.amount,
+             userId:1
+           },
+         },
+       );
       
     
 
-      return {convertedAmt ,rate , rates:res.data};
+      return newTransaction;
     } catch (error) {
+      
       throw new InternalServerErrorException();
     }
   }

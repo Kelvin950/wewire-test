@@ -29,6 +29,9 @@ export class AuthService{
         if(!user){
             throw new UnauthorizedException('Invalid credentials')
         }
+
+
+        
             console.log(this.config.get('JWT_SECRET'));
          const token = await this.jwt.signAsync({id: user.id , email:user.email} , {secret: this.config.get("JWT_SECRET") , expiresIn:"1hr"});
         
