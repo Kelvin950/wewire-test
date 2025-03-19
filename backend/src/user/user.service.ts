@@ -1,34 +1,49 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 import { PrismaService } from '../prisma/prisma.service';
-import { User } from './types';
+import { QueryParams } from './types';
+import { User, Usertransaction } from '@prisma/client';
 
 @Injectable()
 export class UserService {
-    constructor(
-        private prisma:PrismaService
-    ) {}
+  constructor(private prisma: PrismaService) {}
 
+  async getUserTransactions(query: QueryParams, user: User) {
+    try {
+      let page = 1;
+      let pageSize = 10;
 
-    async getUsers(payload:User){
-      try {
-           const user = await this.prisma.user.findUnique({
-             where: {
-               id: payload.id,
-             },
-             select: {
-               id: true,
-               email: true,
-             },
-           });
-
-           if (!user) {
-             throw new UnauthorizedException('Invalid credentials');
-           }
-
-           return user;
-      } catch (error) {
-         throw error;
+      if (query.page) {
+        page = page;
       }
+
+      if (query.pageSize) {
+        pageSize = pageSize;
+      }
+      let usertransaction: Usertransaction;
+
+      if (query.transactionId) {
+        return await this.prisma.usertransaction.findMany({
+          where: {
+            userId: user.id,
+          },
+          skip: (page - 1)*pageSize ,
+          take: pageSize,
+        });
+      }
+
+      return await this.prisma.usertransaction.findMany({
+        where: {
+          userId: user.id,
+          id: query.transactionId,
+        },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException();
     }
+  }
 }
