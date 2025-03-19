@@ -1,10 +1,27 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import Transactions from "./Pages/Transaction";
+import Convert from "./Pages/Convert";
 
-const LazyTraineeRoute = lazy(() => import("./trainees/TraineeDashboard"));
+const LazyTraineeRoute = lazy(() => import("./Pages/Dashboard"));
 
+
+
+const childroutes = [
+  {
+    index: true,
+    element: <Transactions />,
+  },
+  {
+    path: "/convert",
+    element: <Convert />,
+  },
+  {
+    path: "/transactions",
+    element: <Transactions />,
+  },
+];
 const router = createBrowserRouter([
-  // Joshua's Trainee Lazy route
 
   {
     path: "/",
@@ -13,7 +30,7 @@ const router = createBrowserRouter([
         <LazyTraineeRoute />
       </Suspense>
     ),
-    children: [...traineeRoutes],
+    children: [...childroutes],
     errorElement: <>Error</>,
   },
 ]);
