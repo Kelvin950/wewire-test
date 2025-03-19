@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Transactions from "./Pages/Transaction";
 import Convert from "./Pages/Convert";
+import LoginPage from "./Pages/LoginPage";
 
 const LazyTraineeRoute = lazy(() => import("./Pages/Dashboard"));
 
@@ -22,7 +23,6 @@ const childroutes = [
   },
 ];
 const router = createBrowserRouter([
-
   {
     path: "/",
     element: (
@@ -32,6 +32,11 @@ const router = createBrowserRouter([
     ),
     children: [...childroutes],
     errorElement: <>Error</>,
+  },
+
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
 ]);
 

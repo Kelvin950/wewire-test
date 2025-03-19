@@ -1,8 +1,9 @@
 // src/app/store.ts
+//@ts-ignore
 import { configureStore ,Tuple} from "@reduxjs/toolkit";
 import { authApi } from "../features/Authapi";
 import { transactionApi } from "../features/TransactionApi";
-import authReducer from "./authSlice";
+import authReducer from "./AuthSlice";
 
 export const store = configureStore({
   reducer: {
