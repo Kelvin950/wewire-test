@@ -4,7 +4,7 @@ import { AuthDto } from './dto';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-
+import * as bcrypt from "bcryptjs"
 
 @Injectable()
 
@@ -22,25 +22,36 @@ export class AuthService{
             } ,
             select:{
                 id:true  , 
-                email:true
+                email:true ,
+                passwordHash:true
             }
         })
 
-        if(!user){
-            throw new UnauthorizedException('Invalid credentials')
-        }
-
-
         
-            console.log(this.config.get('JWT_SECRET'));
+   
+        console.log(user)
+if (!user) {
+  throw new UnauthorizedException('Invalid credentials');
+}
+
+
+
+const isPasswordCorrect = await bcrypt.compare(dto.password, user.passwordHash);
+
+console.log(isPasswordCorrect, dto);
+
+if (!isPasswordCorrect) {
+  throw new UnauthorizedException('Invalid credentials');
+}
+            
          const token = await this.jwt.signAsync({id: user.id , email:user.email} , {secret: this.config.get("JWT_SECRET") , expiresIn:"1hr"});
         
-        return { user , token};
+        return { user:{email:user.email , id:user.id} , token};
       } catch (error) {
         
         if(error instanceof PrismaClientKnownRequestError){
              
-            throw new  InternalServerErrorException(error.message)
+            throw new  InternalServerErrorException()
         }
 
         throw error

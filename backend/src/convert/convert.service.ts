@@ -1,8 +1,9 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { ConvertDto } from './dto';
 import axios from 'axios';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class ConvertService {
@@ -11,7 +12,7 @@ export class ConvertService {
     private configService: ConfigService,
   ) {}
 
-  async Postconvert(dto: ConvertDto) {
+  async Postconvert(dto: ConvertDto , user:User) {
     try {
       const res = await axios.get(
         `https://openexchangerates.org/api/latest.json?app_id=${this.configService.get('OPEN_EXCHANGE')}`,
@@ -39,7 +40,7 @@ export class ConvertService {
              result: convertedAmt,
              rate,
              amount: dto.amount,
-             userId:1
+             userId:user.id
            },
          },
        );
@@ -48,6 +49,8 @@ export class ConvertService {
 
       return newTransaction;
     } catch (error) {
+
+        console.log(error)
       
       throw new InternalServerErrorException();
     }

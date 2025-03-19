@@ -13,7 +13,7 @@ export class ExchangeRatesService {
         `https://openexchangerates.org/api/latest.json?app_id=${this.config.get('OPEN_EXCHANGE')}`,
       );
 
-      console.log(res);
+      
       return res.data;
     } catch (error) {
       throw new InternalServerErrorException();

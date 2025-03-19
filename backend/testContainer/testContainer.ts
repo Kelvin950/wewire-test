@@ -11,14 +11,14 @@ export default class  TestContainer{
     
     async  start():Promise<ts.StartedTestContainer>{
 
-
+  console.log("test container starting")
          this.container = await new ts.GenericContainer(this.image)
            .withWaitStrategy(ts.Wait.forListeningPorts())
            .withEnvironment({ POSTGRES_PASSWORD :"gorm" , POSTGRES_USER:"gorm" , POSTGRES_DB:"design"})
            .withExposedPorts(this.port)
            .start();
          
-         
+         console.log("port" , this.container.getFirstMappedPort())
         return this.container;  
     }
  

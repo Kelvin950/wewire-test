@@ -15,7 +15,7 @@ export class AuthGuard{
     async canActivate(context:ExecutionContext){
     
         const request= context.switchToHttp().getRequest();
-        if(!request.headers['authorization']) throw new UnauthorizedException('Invalid token')
+        if(!request.headers['authorization']) throw new UnauthorizedException('User not logged In');
         const token = request.headers['authorization'].split(" ")[1]; 
         
         try{
@@ -24,7 +24,7 @@ export class AuthGuard{
             request.user = user;
         ;
         }catch(error){
-            throw new UnauthorizedException('Invalid token')
+            throw new UnauthorizedException('User not logged In')
         }
 
     return true;
