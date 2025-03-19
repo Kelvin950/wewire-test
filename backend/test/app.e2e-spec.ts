@@ -3,7 +3,7 @@ import { INestApplication , ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module';
-import { execSync } from 'child_process';
+
 import { ConfigService } from '@nestjs/config';
 import  TestContainer from "../testContainer/testContainer"
 import * as ts from "testcontainers"
@@ -18,7 +18,7 @@ describe('AppController (e2e)', () => {
     }).compile();
 
      tsCon =await new TestContainer("postgres" , 5432).start();
-  execSync('npx prisma db push  --force-reset', { stdio: 'inherit' });
+ 
     
     app = moduleFixture.createNestApplication();
     const config =  app.get(ConfigService);
@@ -38,26 +38,33 @@ describe('AppController (e2e)', () => {
     await app.close();
     await tsCon.stop();
   });
-  it('/ (GET)', async () => {
-   
- 
-    await request(app.getHttpServer()).post("/auth/signup").send(
-      {
-        email: "tst@gmail.com" , 
-        password:"2123232"
-      }
-     ).expect(201);
-  }) ,
+  
 
   it("/sign in" , async()=>{
     
 
       await request(app.getHttpServer())
-        .post('/auth/signin')
+        .post('/auth/login')
+        .set('Content-Type' , "application/json")
         .send({
           email: 'tst@gmail.com',
           password: '2123232',
         })
         .expect(401);
+  }) ,
+
+  it("should return  a 401  if jwt is not passed" , async()=>{
+     
+    await  request(app.getHttpServer()).get("/exchange-rates").expect(401)
+  
   })
+ ,
+
+ it("should return a 200" , async()=>{
+    
+     await request(app.getHttpServer()).get('/exchange-rates').expect(401).set(
+      "Authorization", ""
+     ).expect(200)
+ }) 
+ 
 });

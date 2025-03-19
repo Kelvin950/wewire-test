@@ -5,15 +5,15 @@ import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { ConvertModule } from './convert/convert.module';
+
 
 import { ExchangeRatesModule } from './exchange-rates/exchange-rates.module';
 import { ConvertModule } from './convert/convert.module';
-import { ExchangeRatesModule } from './exchange-rates/exchange-rates.module';
+
 
 
 @Module({
-  imports: [AuthModule, UserModule, , PrismaModule ,ConfigModule.forRoot({isGlobal:true}) , JwtModule.register({global:true}), ConvertModule, ExchangeRatesModule],
+  imports: [AuthModule, UserModule,  PrismaModule ,ConfigModule.forRoot({isGlobal:true}) , JwtModule.register({global:true}), ConvertModule, ExchangeRatesModule],
  
 })
 export class AppModule {}

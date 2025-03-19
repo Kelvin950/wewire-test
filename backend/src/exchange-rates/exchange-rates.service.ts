@@ -1,17 +1,20 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 
 
 @Injectable()
 export class ExchangeRatesService {
-  constructor() {}
+  constructor(private config:ConfigService) {}
 
   async getExchangeRates() {
     try {
-      const res = await axios.get('');
+      const res = await axios.get(
+        `https://openexchangerates.org/api/latest.json?app_id=${this.config.get('OPEN_EXCHANGE')}`,
+      );
 
       console.log(res);
-      return res;
+      return res.data;
     } catch (error) {
       throw new InternalServerErrorException();
     }

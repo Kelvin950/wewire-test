@@ -1,6 +1,6 @@
 import { Controller, UseGuards , Get } from '@nestjs/common';
 import { ExchangeRatesService } from './exchange-rates.service';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('exchange-rates')
 export class ExchangeRatesController {
