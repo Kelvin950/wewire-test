@@ -2,8 +2,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Transaction } from "../types";
 
-export const transactionApi = createApi({
-  reducerPath: "transactionApi",
+export const RatesApi = createApi({
+  reducerPath: "RatesApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/" , prepareHeaders:(headers)=>{
   
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`)
@@ -11,10 +11,10 @@ export const transactionApi = createApi({
   } }),
   
   endpoints: (builder) => ({
-    getTransactions: builder.query<Transaction[], void>({
-      query: () => "user/transactions",
+    getRates: builder.query<Transaction[], void>({
+      query: () => "exchange-rates",
     }),
   }),
 });
 
-export const { useGetTransactionsQuery } = transactionApi;
+export const { useGetRatesQuery } = RatesApi;

@@ -11,10 +11,12 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [transactionApi.reducerPath]: transactionApi.reducer,
   },
-  middleware: () =>
-    () => new Tuple(  authApi.middleware,
-      transactionApi.middleware)
-  
+  //@ts-ignore
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(
+      authApi.middleware,
+      transactionApi.middleware
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

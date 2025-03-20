@@ -1,26 +1,19 @@
+import { Transaction  as TransactionProp} from "../types";
 
-interface  TransactinProps{
 
-    id:string 
-    currency:string 
-    amount:string
-    date:string 
-    baseCurrency:string
-}
-
-function Transaction(props:TransactinProps){
+function Transaction(props:TransactionProp){
 
     return (
       <>
-        <li
-          key={props.id}
-          className="border p-2 rounded flex justify-between items-center"
-        >
-          <span>{props.currency}</span>
-          <span>{props.baseCurrency}</span>
+      
+          <span>{props.toCurrency}</span>
+          <span>{props.fromCurrency}</span>
           <span>{props.amount}</span>
-          <span>{new Date(props.date).toLocaleDateString()}</span>
-        </li>
+          <span>{props.rate}</span>
+          <span>{props.convertedAmount}</span>
+
+          <span>{new Date(props.createdAt).toLocaleDateString()}</span>
+    
       </>
     );
 }

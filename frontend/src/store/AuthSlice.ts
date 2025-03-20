@@ -1,10 +1,10 @@
 // src/features/auth/authSlice.ts
 //@ts-ignore
 import { createSlice  } from "@reduxjs/toolkit";
-import { User } from "../types";
+import { AutData } from "../types";
 
 interface AuthState {
-  user: User | null;
+  user: AutData | null;
 }
 
 const initialState: AuthState = {
@@ -15,7 +15,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials: (state:AuthState, {payload}: { payload: User }) => {
+    setCredentials: (state:AuthState, {payload}: { payload: AutData }) => {
+        console.log(payload)
+        localStorage.setItem("token", payload.token)
       state.user = payload;
     },
     logout: (state:AuthState) => {

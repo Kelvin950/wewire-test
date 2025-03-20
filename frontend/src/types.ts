@@ -4,10 +4,13 @@ import { FieldError, UseFormRegister } from "react-hook-form";
 export interface User {
   id: number;
   email: string;
-  token: string;
-  password?:string
+  
+ 
 }
-
+export interface AutData {
+  user: User;
+  token: string;
+}
 export  interface formData {
   email?: string;
   password?: string;
@@ -35,8 +38,11 @@ export interface LoginRequest {
 export interface Transaction {
   id: number;
   amount: number;
-  currency: string;
-  date: string;
+  toCurrency: string;
+  convertedAmount: number;
+  rate: number;
+  fromCurrency: string;
+  createdAt: string;
 }
 
 
@@ -58,7 +64,7 @@ export interface Transaction {
        .nonempty("Password cannot be empty")
        .min(8, { message: "Password is too short" })
        .max(20, { message: "Password is too long" }),
-     confirmPassword: z.string(),
+
    })
 
 

@@ -24,8 +24,10 @@ export default function Login(){
      try {
        const user = await login({email:data.email! , password:data.password!}).unwrap();
        if(isLoading){
-        //
+        
+        console.log("loadinf")
        }
+       console.log(user)
        dispatch(setCredentials(user));
      navigate("/")
      } catch (err) {
