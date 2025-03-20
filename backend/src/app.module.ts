@@ -9,11 +9,12 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { ExchangeRatesModule } from './exchange-rates/exchange-rates.module';
 import { ConvertModule } from './convert/convert.module';
+import { NonceModule } from './nonce/nonce.module';
 
 
 
 @Module({
-  imports: [AuthModule, UserModule,  PrismaModule ,ConfigModule.forRoot({isGlobal:true}) , JwtModule.register({global:true}), ConvertModule, ExchangeRatesModule],
+  imports: [AuthModule, UserModule,  PrismaModule ,ConfigModule.forRoot({isGlobal:true}) , JwtModule.register({global:true}), ConvertModule, ExchangeRatesModule, NonceModule],
  
 })
 export class AppModule {}
