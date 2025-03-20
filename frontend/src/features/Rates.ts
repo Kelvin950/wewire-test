@@ -14,6 +14,9 @@ export const RatesApi = createApi({
     getRates: builder.query<Rates, void>({
       query: () => "exchange-rates",
     }),
+    getNonce: builder.query<{ message: string }, void>({
+      query: () => "nonce",
+    }),
     getSecureRates: builder.query<Rates ,void>({
      async queryFn(_, __, ___, baseQuery) {
         const nonce = await baseQuery("nonce");

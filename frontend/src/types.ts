@@ -35,6 +35,14 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface convertRequest{
+ 
+  from:string 
+  to:string
+  amount:number
+  
+}
+
 export interface Transaction {
   id: number;
   amount: number;
@@ -44,6 +52,8 @@ export interface Transaction {
   fromCurrency: string;
   createdAt: string;
 }
+
+
 
 
 export interface Rates{
@@ -78,9 +88,7 @@ type  Rate = Record<string , number>
 
     export const ConvertSchema: ZodType<formData> = z.object({
       amount: z
-        .number({
-          required_error: "required field",
-        })
+        .number({message:"Field is required"})
         .nonnegative()
         .gt(0),
       baseCurrency: z.string(),

@@ -2,7 +2,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormField from "./FormField";
 import { ConvertSchema, formData } from "../types";
-
+import { currencyCodes } from "../constant";
+import { useConvertMutation , useLazyGetNonceQuery } from "../features/ConvertApi";
+import { useState } from "react";
 
 export default function Convert(){
  const {
@@ -14,13 +16,51 @@ export default function Convert(){
      resolver:zodResolver(ConvertSchema)
    });
  
-
+   const [convert , {isLoading,isError}]  = useConvertMutation()
+   const  [result,setResult] =useState<number>()
+    const [triggerNonce , {isLoading:isNonceLoading ,isError:isNonceError}]  =  useLazyGetNonceQuery()
   const onSubmit = async (data:formData) => {
     console.log("SUCCESS", data);
+ 
+    if(isNonceLoading){
+      console.log("loading")
+    }
+
+    if(isNonceError){
+      return 
+    }
+
+
+    triggerNonce()
+
+   const  {data:resData , error} =  await  convert({
+      to: data.currency! , 
+      from:data.baseCurrency! , 
+      amount:data.amount!
+     })
+
+     if(isLoading){
+       console.log(isLoading) 
+     }
+     if(isError){
+      console.log(isError)
+     }
+     
+     if(error){
+      console.log(error)
+     }
+   
+
+     setResult(resData?.result)
+
+     
   };
     return (
       <>
         <div className="f">
+          <div>
+            {result}
+          </div>
           <div className="flex items-center justify-center p-5 mb-3">
             <form
               onSubmit={handleSubmit(onSubmit)}
@@ -43,10 +83,9 @@ export default function Convert(){
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">-- Choose currency --</option>
-                <option value="usd">USD</option>
-                <option value="eur">EUR</option>
-                <option value="ghs">GHS</option>
-                <option value="ngn">NGN</option>
+                {currencyCodes.map(c=>(
+                  <option key={c} value={c}>{c}</option>
+                ))}
               </select>
               <FormField
                 className="w-full border p-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
@@ -62,7 +101,7 @@ export default function Convert(){
                 type="submit"
                 className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300"
               >
-                Sign In
+                Convert
               </button>
             </form>
           </div>

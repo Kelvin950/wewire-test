@@ -9,7 +9,9 @@ import { User } from '@prisma/client';
 export class ConvertService {
   constructor(
     private primsaService: PrismaService,
-    private configService: ConfigService,
+    private {
+      required_error: "required field",
+    }configService: ConfigService,
   ) {}
 
   async Postconvert(dto: ConvertDto , user:User) {
