@@ -12,15 +12,19 @@ export default function SideBar() {
       </div>
 
       <ul className="flex flex-col space-y-4 text-center font-medium text-gray-700">
-        {["Transactions", "Convert"].map((v) => (
-          <li key={v} className="hover:text-blue-600 cursor-pointer">
+        {[
+          { display: "Transactions", link: "/transactions" },
+          { display: "Convert", link: "/convert" },
+          { display: "Today's Rates", link: "/rates" },
+        ].map(({ display, link }) => (
+          <li key={display} className="hover:text-blue-600 cursor-pointer">
             <NavLink
-              to={`/${v.toLowerCase()}`}
+              to={link}
               className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? "active" : ""
+          isPending ? "pending" : isActive ? "active" : ""
               }
             >
-              {v}
+              {display}
             </NavLink>
           </li>
         ))}

@@ -1,5 +1,6 @@
 
 import { FieldError, UseFormRegister } from "react-hook-form";
+ import { z, ZodType } from "zod";
 export interface User {
   id: number;
   email: string;
@@ -8,9 +9,11 @@ export interface User {
 }
 
 export  interface formData {
-  email: string;
+  email?: string;
   password?: string;
-  amount: number;
+  amount?: number;
+  currency?:string
+  baseCurrency?:string
 }
 
 
@@ -41,5 +44,32 @@ export interface Transaction {
     | "email"
     | "password"
     | "amount"
+    | "currency"
     
-    
+
+
+ export const LoginSchema: ZodType<formData> = z
+   .object({
+     email: z.string().email(),
+   
+  
+     password: z
+       .string()
+       .nonempty("Password cannot be empty")
+       .min(8, { message: "Password is too short" })
+       .max(20, { message: "Password is too long" }),
+     confirmPassword: z.string(),
+   })
+
+
+    export const ConvertSchema: ZodType<formData> = z.object({
+      amount: z
+        .number({
+          required_error: "required field",
+        })
+        .nonnegative()
+        .gt(0),
+      baseCurrency: z.string(),
+      currency: z.string(),
+    });
+   

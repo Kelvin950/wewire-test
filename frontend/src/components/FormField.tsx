@@ -3,7 +3,7 @@ import { FormFieldProps } from "../types";
 const FormField: React.FC<FormFieldProps> = ({
   type,
   placeholder,
-  className ,
+  className,
   name,
   register,
   error,
@@ -11,12 +11,13 @@ const FormField: React.FC<FormFieldProps> = ({
 }) => (
   <>
     <input
-     className={className}
+      className={className}
       type={type}
+    
       placeholder={placeholder}
       {...register(name, { valueAsNumber })}
     />
-    {error && <span className="error-message">{error.message}</span>}
+    {error && <span className=" text-red-500 p-3">{error.message}</span>}
   </>
 );
 export default FormField;

@@ -1,18 +1,36 @@
 import { useForm } from "react-hook-form";
-import { formData } from "../types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLoginMutation } from "../features/Authapi";
+import { formData, LoginSchema } from "../types";
 import FormField from "./FormField";
-
-
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../store/AuthSlice";
+import { useNavigate } from "react-router-dom";
 export default function Login(){
  const {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
-  } = useForm<formData>();
+    
+  } = useForm<formData>({
+    resolver: zodResolver(LoginSchema)
+  });
+  const navigate= useNavigate()
+    const dispatch = useDispatch();
+    const [login, { isLoading }] = useLoginMutation();
 
   const onSubmit = async (data: formData) => {
     console.log("SUCCESS", data);
+     try {
+       const user = await login({email:data.email! , password:data.password!}).unwrap();
+       if(isLoading){
+        //
+       }
+       dispatch(setCredentials(user));
+     navigate("/")
+     } catch (err) {
+       console.error("Login failed:", err);
+     }
   };
     return (
       <>

@@ -1,10 +1,14 @@
+import Convert from "../components/Convert";
 
 
-export default function Convert(){
+export default function ConvertPage(){
 
     return (
-      <>
-        <h1 className="text-red-700">Hello world</h1>
-      </>
+      <div className="p-6">
+        <h2 className="text-xl font-bold mb-4">Convert Currency</h2>
+        {/* {isLoading && <p>Loading...</p>}
+      {error && <p>Error loading transactions</p>} */}
+       <Convert/>
+      </div>
     );
 }
