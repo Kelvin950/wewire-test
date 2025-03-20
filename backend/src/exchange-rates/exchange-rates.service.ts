@@ -9,6 +9,7 @@ export class ExchangeRatesService {
 
   async getExchangeRates() {
     try {
+    
       const res = await axios.get(
         `https://openexchangerates.org/api/latest.json?app_id=${this.config.get('OPEN_EXCHANGE')}`,
       );
@@ -16,6 +17,7 @@ export class ExchangeRatesService {
       
       return res.data;
     } catch (error) {
+      console.log(error)
       throw new InternalServerErrorException();
     }
   }

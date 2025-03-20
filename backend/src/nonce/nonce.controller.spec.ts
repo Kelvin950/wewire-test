@@ -12,7 +12,9 @@ describe('NonceController', () => {
     controller = module.get<NonceController>(NonceController);
   });
 
+  
   it('should be defined', () => {
+    
     expect(controller).toBeDefined();
   });
 });

@@ -11,7 +11,7 @@ export class NonceController {
     }
     @UseGuards(AuthGuard)
     @Get()
-    getNonce(@Res() res:Response){
+    getNonce(@Res({ passthrough: true }) res: Response){
         return this.nonceService.setToCookie(res)
     }
 }

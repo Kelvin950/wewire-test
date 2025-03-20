@@ -5,12 +5,13 @@ import { AuthService } from "./auth.service";
 import { AuthGuard } from "./auth.guard";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
+import { NonceModule } from "src/nonce/nonce.module";
 
 
 @Module({
  
     imports:[
-       
+       NonceModule
     ] ,
     controllers:[AuthController] ,
     providers:[AuthService] ,

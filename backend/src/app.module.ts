@@ -6,7 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 
-
+import { CacheModule } from '@nestjs/cache-manager';
 import { ExchangeRatesModule } from './exchange-rates/exchange-rates.module';
 import { ConvertModule } from './convert/convert.module';
 import { NonceModule } from './nonce/nonce.module';
@@ -14,7 +14,10 @@ import { NonceModule } from './nonce/nonce.module';
 
 
 @Module({
-  imports: [AuthModule, UserModule,  PrismaModule ,ConfigModule.forRoot({isGlobal:true}) , JwtModule.register({global:true}), ConvertModule, ExchangeRatesModule, NonceModule],
- 
+  imports: [AuthModule, UserModule,  
+    PrismaModule ,ConfigModule.forRoot({isGlobal:true}) , 
+    JwtModule.register({global:true}),
+    CacheModule.register({isGlobal: true,}) ,
+    ConvertModule, ExchangeRatesModule, NonceModule],
 })
 export class AppModule {}

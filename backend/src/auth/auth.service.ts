@@ -5,15 +5,16 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from "bcryptjs"
-
+import { NonceService } from 'src/nonce/nonce.service';
+import { Request, Response } from 'express';
 @Injectable()
 
 export class AuthService{
      
-    constructor(private prisma:PrismaService , private jwt:JwtService , private config:ConfigService){
+    constructor(private prisma:PrismaService , private jwt:JwtService , private config:ConfigService , private nonceService:NonceService){
 
     }
-  async  signin(dto:AuthDto){
+  async  signin(dto:AuthDto  , res:Response){
       try {
         
         const user =  await this.prisma.user.findFirst({
@@ -46,7 +47,12 @@ if (!isPasswordCorrect) {
             
          const token = await this.jwt.signAsync({id: user.id , email:user.email} , {secret: this.config.get("JWT_SECRET") , expiresIn:"1hr"});
         
-        return { user:{email:user.email , id:user.id} , token};
+         console.log(token)
+        //  const nonce = await  this.nonceService.signNonce()
+        //  res.cookie("validCred" , nonce, {httpOnly:true , secure:false , sameSite:"lax", maxAge:5*60*1000})
+        const message =  await this.nonceService.setToCookie(res)
+
+        return { user:{email:user.email , id:user.id} , token, ...message};
       } catch (error) {
         
         if(error instanceof PrismaClientKnownRequestError){

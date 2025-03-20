@@ -4,6 +4,7 @@ import { ConvertDto } from './dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { GetUser } from '../auth/decorator';
 import { User } from '@prisma/client';
+import { NonceGuard } from '../nonce/nonce.guard';
 
 @Controller('convert')
 export class ConvertController {
@@ -12,6 +13,7 @@ export class ConvertController {
 
     }
 
+    @UseGuards(NonceGuard)
     @UseGuards(AuthGuard)
     @Post()
      Postconvert(@Body() dto:ConvertDto , @GetUser() user:User){
