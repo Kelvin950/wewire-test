@@ -5,7 +5,8 @@ import { ConvertSchema, formData } from "../types";
 import { currencyCodes } from "../constant";
 import { useConvertMutation , useLazyGetNonceQuery } from "../features/ConvertApi";
 import { useState } from "react";
-
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export default function Convert(){
  const {
      register,
@@ -15,24 +16,26 @@ export default function Convert(){
    } = useForm<formData>({
      resolver:zodResolver(ConvertSchema)
    });
- 
+ const navigate = useNavigate()
    const [convert , {isLoading,isError}]  = useConvertMutation()
    const  [result,setResult] =useState<number>()
    const [currency , setCurrency] = useState<string>()
     const [triggerNonce , {isLoading:isNonceLoading ,isError:isNonceError}]  =  useLazyGetNonceQuery()
   const onSubmit = async (data:formData) => {
-    console.log("SUCCESS", data);
+    // console.log("SUCCESS", data);
  
+
     if(isNonceLoading){
-      console.log("loading")
-    }
+      toast.info("Please Wait")
+   }
 
-    if(isNonceError){
-      return 
-    }
-
-
-    triggerNonce()
+   if(isNonceError){
+      
+   toast.error("Try again")
+   }
+   
+ await  triggerNonce()
+ 
 
    const  {data:resData , error} =  await  convert({
       to: data.currency!.toUpperCase() , 
@@ -41,15 +44,25 @@ export default function Convert(){
      })
 
      if(isLoading){
-       console.log(isLoading) 
+      toast.loading("Please Wait")
      }
      if(isError){
-      console.log(isError)
+
+   
+
+     if(error && "statusCode" in error){
+      //  console.log(error)
+      if(error.statusCode == 401){
+          localStorage.removeItem("token")
+          navigate("/login" , {replace:true})
+          return
+      }
+      toast.error("Failed. Try again")
+     }
+   
+      
      }
 
-     if(error){
-      console.log(error)
-     }
    
 
      setResult(resData?.result)
@@ -59,7 +72,7 @@ export default function Convert(){
       <>
         <div className="f">
         <div className="flex text-white justify-center items-center  text-6xl font-bold text-center">
-   <span className="p-2">{result}</span> <span> {currency}</span>
+   {result !=null && <div> <span className="p-2">{result.toFixed(2)}</span> <span> {currency}</span></div>}
 </div>
           <div className="flex items-center justify-center  mb-3">
             <form

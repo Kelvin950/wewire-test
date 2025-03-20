@@ -6,6 +6,7 @@ import FormField from "./FormField";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../store/AuthSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 export default function Login(){
  const {
     register,
@@ -20,18 +21,19 @@ export default function Login(){
     const [login, { isLoading }] = useLoginMutation();
 
   const onSubmit = async (data: formData) => {
-    console.log("SUCCESS", data);
+    // console.log("SUCCESS", data);
      try {
        const user = await login({email:data.email! , password:data.password!}).unwrap();
        if(isLoading){
         
-        console.log("loadinf")
+        toast.info("Please wait")
+        // console.log("loadinf")
        }
-       console.log(user)
+      //  console.log(user)
        dispatch(setCredentials(user));
      navigate("/")
-     } catch (err) {
-       console.error("Login failed:", err);
+     } catch {
+       toast.error("Login failed. Invalid credentials")
      }
   };
     return (

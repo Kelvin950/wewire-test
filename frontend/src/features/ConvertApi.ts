@@ -1,12 +1,12 @@
 // src/features/auth/authApi.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Transaction, convertRequest } from "../types";
+import { ErrorType, Transaction, convertRequest } from "../types";
 
 export const convertApi = createApi({
   reducerPath: "convertApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/"  ,credentials:"include" ,prepareHeaders:(headers)=>{
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`)
-  }}),
+  } }),
   endpoints: (builder) => ({
   
     convert: builder.mutation<Transaction, convertRequest>({
@@ -16,6 +16,9 @@ export const convertApi = createApi({
         body: credentials,
       
       }),
+      transformErrorResponse:(error)=>{
+        return error.data as ErrorType;
+      }
       
     }),
     getNonce: builder.query<{ message: string }, void>({
