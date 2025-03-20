@@ -15,7 +15,7 @@ export class ExchangeRatesService {
       );
 
       
-      return res.data;
+      return {rates:res.data["rates"]};
     } catch (error) {
       console.log(error)
       throw new InternalServerErrorException();

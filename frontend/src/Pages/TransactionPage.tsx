@@ -1,8 +1,9 @@
 import Transactions from "../components/Transaction";
-import { useGetTransactionsQuery } from "../features/TransactionApi";
+import { useGetSecureTransactionQuery  } from "../features/TransactionApi";
 
 function TransactionPage(){
-    const { data, isLoading, error } = useGetTransactionsQuery();
+    const { data, isLoading, error } = useGetSecureTransactionQuery();
+    console.log(data)
 console.log(data)
     if(isLoading){
          return (
@@ -11,6 +12,8 @@ console.log(data)
              {/* {isLoading && <p>Loading...</p>}
       {error && <p>Error loading transactions</p>} */}
              <ul className="space-y-2">
+             <li className="border p-2 rounded flex justify-between items-center">
+
                <Transactions
                  fromCurrency="GHS"
                  toCurrency="USD"
@@ -18,8 +21,9 @@ console.log(data)
                  createdAt=""
                  id={1}
                  rate={12}
-                 convertedAmount={100}
+                 result={100}
                />
+               </li>
              </ul>
            </div>
          );
@@ -32,6 +36,9 @@ console.log(data)
              {/* {isLoading && <p>Loading...</p>}
       {error && <p>Error loading transactions</p>} */}
              <ul className="space-y-2">
+              <li className="border p-2 rounded flex justify-between items-center">
+
+            
                <Transactions
                  fromCurrency="GHS"
                  toCurrency="USD"
@@ -39,8 +46,11 @@ console.log(data)
                  createdAt="12"
                  id={1}
                  rate={12}
-                 convertedAmount={100}
+                 result={100}
+                 
                />
+                 </li>
+                 
              </ul>
            </div>
          );
@@ -63,7 +73,7 @@ console.log(data)
              createdAt={txs.createdAt}
              id={txs.id}
              rate={txs.rate}
-             convertedAmount={txs.convertedAmount}
+             result={+txs.result.toFixed(3)}
            />
          </li>
        ))}

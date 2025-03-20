@@ -8,13 +8,34 @@ export const transactionApi = createApi({
   
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`)
     
-  } }),
+  } , credentials:"include" }),
   
   endpoints: (builder) => ({
     getTransactions: builder.query<Transaction[], void>({
       query: () => "user/transactions",
     }),
+    getNonce: builder.query<{ message: string }, void>({
+      query: () => "nonce",
+    }),
+    
+    getSecureTransaction:builder.query<Transaction[] ,void>({
+         async queryFn(_, __, ___, baseQuery) {
+            const nonce = await baseQuery("nonce");
+            if (nonce.error) {
+              return { error: nonce.error };
+            }
+    
+           const txn = await baseQuery("user/transactions");
+    
+        if (txn.error) return { error: txn.error };
+    
+        
+        return { data: txn.data as Transaction[] };
+            
+          },
+        })
+
   }),
 });
 
-export const { useGetTransactionsQuery } = transactionApi;
+export const { useGetTransactionsQuery ,useGetNonceQuery,useGetSecureTransactionQuery} = transactionApi;

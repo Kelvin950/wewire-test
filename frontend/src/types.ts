@@ -39,11 +39,19 @@ export interface Transaction {
   id: number;
   amount: number;
   toCurrency: string;
-  convertedAmount: number;
+  result: number;
   rate: number;
   fromCurrency: string;
   createdAt: string;
 }
+
+
+export interface Rates{
+  rates:Rate
+}
+
+
+type  Rate = Record<string , number>
 
 
   export type ValidFieldNames =

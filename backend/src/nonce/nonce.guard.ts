@@ -21,12 +21,12 @@ export class NonceGuard{
         
         if(!request.cookies){
             console.log(`No cookies found`)
-            throw new UnauthorizedException('User not logged In')
+            throw new UnauthorizedException('User not logged In nonce ')
         }
 
         if(!request.cookies.validCred){
             console.log("Ds")
-            throw new UnauthorizedException('User not logged In')
+            throw new UnauthorizedException('User not logged In nonce')
         }
         
         const token = request.cookies.validCred;
@@ -40,13 +40,13 @@ export class NonceGuard{
              console.log(nonceUsed)
             if(nonceUsed){
                 console.log("Nonce has already been used")
-                throw new UnauthorizedException('User not logged in')
+                throw new UnauthorizedException('User not logge nonced in')
             }
             
         
         }catch(error){
             console.log(error)
-            throw new UnauthorizedException('User not logged In')
+            throw new UnauthorizedException('User not logged In nonce')
         }
 
     return true;

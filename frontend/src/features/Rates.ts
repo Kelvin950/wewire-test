@@ -1,6 +1,6 @@
 // src/features/transactions/transactionApi.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Transaction } from "../types";
+import { Rates } from "../types";
 
 export const RatesApi = createApi({
   reducerPath: "RatesApi",
@@ -8,13 +8,29 @@ export const RatesApi = createApi({
   
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`)
     
-  } }),
+  }  , credentials:"include"}),
   
   endpoints: (builder) => ({
-    getRates: builder.query<Transaction[], void>({
+    getRates: builder.query<Rates, void>({
       query: () => "exchange-rates",
     }),
+    getSecureRates: builder.query<Rates ,void>({
+     async queryFn(_, __, ___, baseQuery) {
+        const nonce = await baseQuery("nonce");
+        if (nonce.error) {
+          return { error: nonce.error };
+        }
+
+       const rates = await baseQuery("exchange-rates");
+
+    if (rates.error) return { error: rates.error };
+
+    console.log(rates)
+    return { data: rates.data as Rates };
+        
+      },
+    })
   }),
 });
 
-export const { useGetRatesQuery } = RatesApi;
+export const { useGetRatesQuery  ,useGetSecureRatesQuery} = RatesApi;

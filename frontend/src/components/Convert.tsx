@@ -34,9 +34,7 @@ export default function Convert(){
               >
                 <option value="">-- Base currency --</option>
                 <option value="usd">USD</option>
-                <option value="eur">EUR</option>
-                <option value="ghs">GHS</option>
-                <option value="ngn">NGN</option>
+                
               </select>
               <select
                 id="currency"
