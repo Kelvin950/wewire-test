@@ -1,30 +1,33 @@
-import { Transaction  as TransactionProp} from "../types";
+import { Transaction as TransactionProp } from "../types";
 
+function Transaction(props: TransactionProp) {
+  const labels: Record<string, string> = {
+    fromCurrency: "From",
+    toCurrency: "To",
+    amount: "Amount",
+    rate: "Exchange Rate",
+    result: "Converted Amount",
+    createdAt: "Date",
+  };
 
-function Transaction(props:TransactionProp){
+  return (
+    <>
+      {Object.entries(props).map(([key, value]) => {
+      if (key === "id") return null;
 
-    return (
-      <>
-      
-      <span className="font-medium">From : {props.fromCurrency}</span>
-  
+      const displayValue =
+        key === "createdAt"
+          ? new Date(value as string).toLocaleDateString()
+          : value;
 
-  <span className="font-medium">To : {props.toCurrency}</span>
-
-
-  <span className="font-medium">Amount : {props.amount}</span>
-  
-
-  <span className="font-medium">Exchange Rate : {props.rate}</span>
-  
-
-  <span className="font-medium">Converted Amount : {props.result}</span>
-  
-
-          <span>{new Date(props.createdAt).toLocaleDateString()}</span>
-    
-      </>
-    );
+      return (
+        <span key={key} className="font-medium text-white">
+          {labels[key]}: {typeof displayValue == "number" ? displayValue.toFixed(2) :displayValue}
+        </span>
+      );
+      })}
+    </>
+  );
 }
 
-export default Transaction
+export default Transaction;

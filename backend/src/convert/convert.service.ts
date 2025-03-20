@@ -9,9 +9,7 @@ import { User } from '@prisma/client';
 export class ConvertService {
   constructor(
     private primsaService: PrismaService,
-    private {
-      required_error: "required field",
-    }configService: ConfigService,
+    private configService: ConfigService,
   ) {}
 
   async Postconvert(dto: ConvertDto , user:User) {
@@ -20,6 +18,7 @@ export class ConvertService {
         `https://openexchangerates.org/api/latest.json?app_id=${this.configService.get('OPEN_EXCHANGE')}`,
       );
 
+      console.log(dto)
       const to = res.data["rates"][dto.to]
       const from=  res.data["rates"][dto.from] 
 
@@ -54,6 +53,9 @@ export class ConvertService {
 
         console.log(error)
       
+        if(error){
+          throw error
+        }
       throw new InternalServerErrorException();
     }
   }

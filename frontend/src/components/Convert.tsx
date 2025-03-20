@@ -18,6 +18,7 @@ export default function Convert(){
  
    const [convert , {isLoading,isError}]  = useConvertMutation()
    const  [result,setResult] =useState<number>()
+   const [currency , setCurrency] = useState<string>()
     const [triggerNonce , {isLoading:isNonceLoading ,isError:isNonceError}]  =  useLazyGetNonceQuery()
   const onSubmit = async (data:formData) => {
     console.log("SUCCESS", data);
@@ -34,8 +35,8 @@ export default function Convert(){
     triggerNonce()
 
    const  {data:resData , error} =  await  convert({
-      to: data.currency! , 
-      from:data.baseCurrency! , 
+      to: data.currency!.toUpperCase() , 
+      from:data.baseCurrency!.toUpperCase() , 
       amount:data.amount!
      })
 
@@ -45,23 +46,22 @@ export default function Convert(){
      if(isError){
       console.log(isError)
      }
-     
+
      if(error){
       console.log(error)
      }
    
 
      setResult(resData?.result)
-
-     
+     setCurrency(data.currency)
   };
     return (
       <>
         <div className="f">
-          <div>
-            {result}
-          </div>
-          <div className="flex items-center justify-center p-5 mb-3">
+        <div className="flex text-white justify-center items-center  text-6xl font-bold text-center">
+   <span className="p-2">{result}</span> <span> {currency}</span>
+</div>
+          <div className="flex items-center justify-center  mb-3">
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="max-w-sm mx-auto mt-20 space-y-4"
@@ -69,17 +69,17 @@ export default function Convert(){
               <select
                 id="currency"
                 {...register("baseCurrency")}
-                defaultValue="ghs"
+                defaultValue="GHS"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">-- Base currency --</option>
-                <option value="usd">USD</option>
+                <option value="USD">USD</option>
                 
               </select>
               <select
                 id="currency"
                 {...register("currency")}
-                defaultValue="usd"
+                defaultValue="USD"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">-- Choose currency --</option>

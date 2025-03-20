@@ -8,7 +8,7 @@ console.log(data)
     if(isLoading){
          return (
            <div className="p-6">
-             <h2 className="text-xl font-bold mb-4">Transaction History</h2>
+             <h2 className="text-xl font-bold text-white mb-4">Transaction History</h2>
              {/* {isLoading && <p>Loading...</p>}
       {error && <p>Error loading transactions</p>} */}
              <ul className="space-y-2">
@@ -32,7 +32,7 @@ console.log(data)
     if(error){
          return (
            <div className="p-6">
-             <h2 className="text-xl font-bold mb-4">Transaction History</h2>
+             <h2 className="text-xl font-bold mb-4 text-white">Transaction History</h2>
              {/* {isLoading && <p>Loading...</p>}
       {error && <p>Error loading transactions</p>} */}
              <ul className="space-y-2">
@@ -57,7 +57,7 @@ console.log(data)
     }
  return (
    <div className="p-6">
-     <h2 className="text-xl font-bold mb-4">Transaction History</h2>
+     <h2 className="text-xl font-bold mb-4 text-white">Transaction History</h2>
      {/* {isLoading && <p>Loading...</p>}
       {error && <p>Error loading transactions</p>} */}
      <ul className="space-y-2">
@@ -70,10 +70,11 @@ console.log(data)
              fromCurrency={txs.fromCurrency}
              toCurrency={txs.toCurrency}
              amount={txs.amount}
-             createdAt={txs.createdAt}
+            
              id={txs.id}
              rate={txs.rate}
              result={+txs.result.toFixed(3)}
+             createdAt={txs.createdAt}
            />
          </li>
        ))}

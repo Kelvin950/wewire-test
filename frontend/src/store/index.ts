@@ -6,6 +6,7 @@ import { transactionApi } from "../features/TransactionApi";
 import authReducer from "./AuthSlice";
 import { RatesApi } from "../features/Rates";
 import { nonceApi } from "../features/nonceApi";
+import { convertApi } from "../features/ConvertApi";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [transactionApi.reducerPath]: transactionApi.reducer,
     [RatesApi.reducerPath]: RatesApi.reducer,
+    [convertApi.reducerPath]:convertApi.reducer
   },
   //@ts-ignore
   middleware: (getDefaultMiddleware) =>
@@ -20,6 +22,7 @@ export const store = configureStore({
       authApi.middleware,
       RatesApi.middleware ,
       nonceApi.middleware,
+      convertApi.middleware,
       transactionApi.middleware
     ),
 });
