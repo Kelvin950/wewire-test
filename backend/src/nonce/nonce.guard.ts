@@ -19,6 +19,11 @@ export class NonceGuard{
     
         const request= context.switchToHttp().getRequest<Request>();
         
+        if(!request.cookies){
+            console.log(`No cookies found`)
+            throw new UnauthorizedException('User not logged In')
+        }
+
         if(!request.cookies.validCred){
             console.log("Ds")
             throw new UnauthorizedException('User not logged In')
@@ -26,7 +31,7 @@ export class NonceGuard{
         
         const token = request.cookies.validCred;
 
-        console.log(token)
+        console.log(token ,"nonce guard")
         try{
 
             const nonce = await this.jwt.verifyAsync(token , {secret: this.config.get("JWT_SECRET_NONCE")});

@@ -5,7 +5,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from "bcryptjs"
-import { NonceService } from 'src/nonce/nonce.service';
+import { NonceService } from '../nonce/nonce.service';
 import { Request, Response } from 'express';
 @Injectable()
 

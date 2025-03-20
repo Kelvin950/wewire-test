@@ -1,7 +1,7 @@
 import { Controller , Get, Injectable, UseGuards , Req, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
-import { GetUser } from 'src/auth/decorator';
+import { GetUser } from '../auth/decorator';
 import { User } from '@prisma/client';
 import { NonceGuard } from '../nonce/nonce.guard';
 import { QueryParams } from './types';
