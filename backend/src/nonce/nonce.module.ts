@@ -3,8 +3,8 @@ import { NonceService } from './nonce.service';
 import { NonceController } from './nonce.controller';
 @Global()
 @Module({
-  exports:[NonceService],
+  exports: [NonceService],
   providers: [NonceService],
-  controllers: [NonceController]
+  controllers: [NonceController],
 })
 export class NonceModule {}

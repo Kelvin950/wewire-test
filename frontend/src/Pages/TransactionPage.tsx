@@ -26,7 +26,7 @@ function TransactionPage(){
       );
       if (unAuthorizedError) {
         localStorage.removeItem("token");
-        navigate("/login", { replace: true });
+        navigate("/login");
         return;
       }
     

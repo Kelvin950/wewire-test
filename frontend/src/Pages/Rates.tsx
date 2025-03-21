@@ -27,13 +27,13 @@ export default function ExchangeRates() {
 
       if("data" in error){
             const err =  error.data as ErrorType
-            const authError = (
+            const unAuthorizedError = (
               err.statusCode === 401 && !err.message?.toLowerCase().includes("nonce")
             );
-            if (authError) {
+            if (unAuthorizedError) {
               localStorage.removeItem("token");
-              navigate("/login", { replace: true });
-              return;
+              navigate("/login");
+              
             }
           
            }

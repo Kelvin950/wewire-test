@@ -1,12 +1,8 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { QueryParams } from './types';
-import { User, Usertransaction } from '@prisma/client';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -18,20 +14,19 @@ export class UserService {
       let pageSize = 10;
 
       if (query.page) {
-        page = page;
+        page = query.page;
       }
 
       if (query.pageSize) {
-        pageSize = pageSize;
+        pageSize = query.pageSize;
       }
-      let usertransaction: Usertransaction;
 
       if (query.transactionId) {
         return await this.prisma.usertransaction.findMany({
           where: {
             userId: user.id,
           },
-          skip: (page - 1)*pageSize ,
+          skip: (page - 1) * pageSize,
           take: pageSize,
         });
       }
@@ -42,7 +37,7 @@ export class UserService {
           id: query.transactionId,
         },
       });
-    } catch (error) {
+    } catch {
       throw new InternalServerErrorException();
     }
   }

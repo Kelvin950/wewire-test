@@ -4,8 +4,9 @@ import { ExchangeRatesService } from './exchange-rates.service';
 import { NonceModule } from '../nonce/nonce.module';
 
 @Module({
-  imports:[NonceModule],
+  imports: [NonceModule],
+  exports: [ExchangeRatesService],
   controllers: [ExchangeRatesController],
-  providers: [ExchangeRatesService]
+  providers: [ExchangeRatesService],
 })
 export class ExchangeRatesModule {}
