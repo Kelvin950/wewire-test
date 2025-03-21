@@ -4,7 +4,7 @@ import { ErrorType, Transaction, convertRequest } from "../types";
 
 export const convertApi = createApi({
   reducerPath: "convertApi",
-  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.BASE_URL  ,credentials:"include" ,prepareHeaders:(headers)=>{
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_URL  ,credentials:"include" ,prepareHeaders:(headers)=>{
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`)
   } }),
   endpoints: (builder) => ({

@@ -4,7 +4,7 @@ import { Transaction } from "../types";
 
 export const transactionApi = createApi({
   reducerPath: "transactionApi",
-  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.BASE_URL , prepareHeaders:(headers)=>{
+  baseQuery: fetchBaseQuery({ baseUrl:import.meta.env.VITE_BASE_URL  , prepareHeaders:(headers)=>{
   
     headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`)
     

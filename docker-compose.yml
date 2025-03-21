@@ -6,9 +6,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: nest
+      POSTGRES_USER: gorm
+      POSTGRES_PASSWORD: gorm
+      POSTGRES_DB: rates
   backend:
     depends_on:
       - db
@@ -21,7 +21,7 @@ services:
       DATABASE_URL: postgres://gorm:gorm@Db:5432/rates
       JWT_SECRET: 123
       JWT_SECRET_NONCE: nest
-      OPEN_EXCHANGE : 12121
+      OPEN_EXCHANGE : 
   frontend:
     depends_on:
       - backend
@@ -29,6 +29,6 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "5173:5173"
+      - "5173:80"
     environment:
-       BASE_URL: http://Backend:8080/
+       VITE_BASE_URL: http://localhost:8080
