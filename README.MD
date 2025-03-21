@@ -16,11 +16,11 @@
  A user is created when the backend app starts with credentials
  email : test@wewire.com
  password: password123
-backend application url :http://localhost:8080
+backend application url http://localhost:8080
 
 - for frontend 
 - VITE_BASE_URL
- frontend app url : http://localhost:5173
+- frontend app url : http://localhost:5173
 
 - npm run start:devapp to start backend app
 - npm run dev to start frontend
