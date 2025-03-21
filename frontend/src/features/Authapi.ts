@@ -4,7 +4,7 @@ import {  LoginRequest, AutData } from "../types";
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080"  ,credentials:"include"}),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.BASE_URL  ,credentials:"include"}),
   endpoints: (builder) => ({
   
     login: builder.mutation<AutData, LoginRequest>({
