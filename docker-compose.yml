@@ -21,7 +21,7 @@ services:
       DATABASE_URL: postgres://gorm:gorm@Db:5432/rates
       JWT_SECRET: 123
       JWT_SECRET_NONCE: nest
-      OPEN_EXCHANGE : 
+      OPEN_EXCHANGE : sdsds
   frontend:
     depends_on:
       - backend
@@ -31,4 +31,4 @@ services:
     ports:
       - "5173:80"
     environment:
-       VITE_BASE_URL: http://localhost:8080
+       VITE_BASE_URL: http://backend:8080

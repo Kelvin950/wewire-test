@@ -28,7 +28,7 @@ export default function ExchangeRates() {
       if("data" in error){
             const err =  error.data as ErrorType
             const unAuthorizedError = (
-              err.statusCode === 401 && !err.message?.toLowerCase().includes("nonce")
+              err.statusCode === 401 && !err.message?.includes("nonce")
             );
             if (unAuthorizedError) {
               localStorage.removeItem("token");

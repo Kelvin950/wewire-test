@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormField from "./FormField";
-import { ConvertSchema, formData } from "../types";
+import { ConvertSchema, ErrorType, formData } from "../types";
 import { currencyCodes } from "../constant";
 import { useConvertMutation , useLazyGetNonceQuery } from "../features/ConvertApi";
 import { useState } from "react";
@@ -54,8 +54,15 @@ export default function Convert(){
       //  console.log(error)
       if(error.statusCode == 401){
           localStorage.removeItem("token")
-          navigate("/login" , {replace:true})
+          navigate("/login")
           return
+      }
+     
+       if(error.statusCode == 400){
+          const err =  error as ErrorType
+       
+          toast.error(err.message[0])
+        return
       }
       toast.error("Failed. Try again")
      }

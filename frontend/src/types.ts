@@ -46,7 +46,7 @@ export interface convertRequest{
 export interface  ErrorType{
 
     statusCode:number 
-    message?:string 
+    message:string | string[]
 
 
 }

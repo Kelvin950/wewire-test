@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { ErrorType } from "../types";
 function TransactionPage(){
-    const { data, isLoading, error } = useGetSecureTransactionQuery();
+    const { data, isLoading, error } = useGetSecureTransactionQuery(undefined,{
+      refetchOnMountOrArgChange:true
+    });
   const navigate=  useNavigate()
   useEffect(() => {
     if (isLoading) {
@@ -22,7 +24,7 @@ function TransactionPage(){
      if("data" in error){
       const err =  error.data as ErrorType
       const unAuthorizedError = (
-        err.statusCode === 401 && !err.message?.toLowerCase().includes("nonce")
+        err.statusCode === 401 && !err.message?.includes("nonce")
       );
       if (unAuthorizedError) {
         localStorage.removeItem("token");
