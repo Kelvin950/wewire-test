@@ -40,7 +40,7 @@ export class ExchangeRatesService {
         `https://openexchangerates.org/api/latest.json?app_id=${this.config.get('OPEN_EXCHANGE')}`,
       );
       rates = data.data['rates'];
-      await this.cacheManager.set('rate', rates);
+      await this.cacheManager.set('rate', rates, 600);
     }
 
     return rates;
