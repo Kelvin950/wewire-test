@@ -1,11 +1,9 @@
-import { IsString, IsInt , IsEmail } from 'class-validator';
+import { IsString, IsEmail } from 'class-validator';
 
 export class AuthDto {
+  @IsEmail()
+  email: string;
 
-
-@IsEmail()
- email:string  ;
-
-@IsString()
- password:string ; 
+  @IsString()
+  password: string;
 }

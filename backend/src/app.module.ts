@@ -11,13 +11,17 @@ import { ExchangeRatesModule } from './exchange-rates/exchange-rates.module';
 import { ConvertModule } from './convert/convert.module';
 import { NonceModule } from './nonce/nonce.module';
 
-
-
 @Module({
-  imports: [AuthModule, UserModule,  
-    PrismaModule ,ConfigModule.forRoot({isGlobal:true}) , 
-    JwtModule.register({global:true}),
-    CacheModule.register({isGlobal: true,}) ,
-    ConvertModule, ExchangeRatesModule, NonceModule],
+  imports: [
+    AuthModule,
+    UserModule,
+    PrismaModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    JwtModule.register({ global: true }),
+    CacheModule.register({ isGlobal: true }),
+    ConvertModule,
+    ExchangeRatesModule,
+    NonceModule,
+  ],
 })
 export class AppModule {}

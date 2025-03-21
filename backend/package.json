@@ -11,6 +11,8 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
+    "start:con":"devdb:deploy && prisma:seed && sleep 2 && nest start" ,
+    "devdb:deploy":"npx prisma dev" ,
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

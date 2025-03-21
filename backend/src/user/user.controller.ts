@@ -1,4 +1,4 @@
-import { Controller , Get, Injectable, UseGuards , Req, Query } from '@nestjs/common';
+import { Controller, Get, UseGuards, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { GetUser } from '../auth/decorator';

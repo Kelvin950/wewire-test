@@ -5,13 +5,10 @@ import { Response } from 'express';
 
 @Controller('nonce')
 export class NonceController {
-
-    constructor( private nonceService:NonceService){
-
-    }
-    @UseGuards(AuthGuard)
-    @Get()
-    getNonce(@Res({ passthrough: true }) res: Response){
-        return this.nonceService.setToCookie(res)
-    }
+  constructor(private nonceService: NonceService) {}
+  @UseGuards(AuthGuard)
+  @Get()
+  getNonce(@Res({ passthrough: true }) res: Response) {
+    return this.nonceService.setToCookie(res);
+  }
 }

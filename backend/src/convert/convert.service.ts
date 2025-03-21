@@ -12,7 +12,7 @@ import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 import { User } from '@prisma/client';
-import { ExchangeRatesService } from 'src/exchange-rates/exchange-rates.service';
+import { ExchangeRatesService } from '../exchange-rates/exchange-rates.service';
 export interface Root {
   disclaimer: string;
   license: string;
@@ -43,11 +43,11 @@ export class ConvertService {
       //   await this.cacheManager.set('rate', rates);
       // }
       const rates = await this.exchangeRatesService.fetchRates();
-      console.log(rates);
-      console.log(dto);
+      // console.log(rates);
+      // console.log(dto);
       const to = rates[dto.to];
       const from = rates[dto.from];
-      console.log(to, from);
+      // console.log(to, from);
       if (!to) {
         throw new NotFoundException(`${to} currency not found `);
       }

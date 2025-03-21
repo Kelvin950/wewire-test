@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import * as  bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
 import 'dotenv/config';
-
 
 const prisma = new PrismaClient();
 
@@ -17,7 +16,7 @@ async function main() {
     },
   });
 
-  console.log('🚀 Test user created');
+  console.log('Test user created');
 }
 
 main()

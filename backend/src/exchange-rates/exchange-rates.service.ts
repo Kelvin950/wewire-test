@@ -26,15 +26,15 @@ export class ExchangeRatesService {
     try {
       const rates = await this.fetchRates();
       return { rates };
-    } catch (error) {
-      console.log(error);
+    } catch {
+      // console.log(error);
       throw new InternalServerErrorException();
     }
   }
 
   async fetchRates(): Promise<Rates> {
     let rates = await this.cacheManager.get<Rates>('rate');
-    console.log(rates);
+    // console.log(rates);
     if (!rates) {
       const data = await axios.get<Root>(
         `https://openexchangerates.org/api/latest.json?app_id=${this.config.get('OPEN_EXCHANGE')}`,

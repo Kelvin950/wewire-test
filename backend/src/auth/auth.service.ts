@@ -32,7 +32,7 @@ export class AuthService {
         },
       });
 
-      console.log(user);
+      // console.log(user);
       if (!user) {
         throw new UnauthorizedException('Invalid credentials');
       }
@@ -42,7 +42,7 @@ export class AuthService {
         user.passwordHash,
       );
 
-      console.log(isPasswordCorrect, dto);
+      // console.log(isPasswordCorrect, dto);
 
       if (!isPasswordCorrect) {
         throw new UnauthorizedException('Invalid credentials');
@@ -53,7 +53,7 @@ export class AuthService {
         { secret: this.config.get('JWT_SECRET'), expiresIn: '1hr' },
       );
 
-      console.log(token);
+      // console.log(token);
       //  const nonce = await  this.nonceService.signNonce()
       //  res.cookie("validCred" , nonce, {httpOnly:true , secure:false , sameSite:"lax", maxAge:5*60*1000})
       const message = await this.nonceService.setToCookie(res);

@@ -21,12 +21,12 @@ export class NonceGuard {
     const request = context.switchToHttp().getRequest<Request>();
 
     if (!request.cookies) {
-      console.log(`No cookies found`);
+      //   console.log(`No cookies found`);
       throw new UnauthorizedException('User not logged In nonce ');
     }
 
     if (!request.cookies.validCred) {
-      console.log('Ds');
+      //   console.log('Ds');
       throw new UnauthorizedException('User not logged In nonce');
     }
 
@@ -37,7 +37,7 @@ export class NonceGuard {
       throw new UnauthorizedException('Invalid token');
     }
 
-    console.log(token, 'nonce guard');
+    // console.log(token, 'nonce guard');
     try {
       const nonce = await this.jwt.verifyAsync<{
         nonce: string;
@@ -45,15 +45,15 @@ export class NonceGuard {
       }>(token, {
         secret: this.config.get<string>('JWT_SECRET_NONCE'),
       });
-      console.log(nonce);
+      //   console.log(nonce);
       const nonceUsed = await this.nonceService.verifyNonce(nonce.nonce);
-      console.log(nonceUsed);
+      //   console.log(nonceUsed);
       if (nonceUsed) {
-        console.log('Nonce has already been used');
+        // console.log('Nonce has already been used');
         throw new UnauthorizedException('User not logge nonced in');
       }
-    } catch (error) {
-      console.log(error);
+    } catch {
+      //   console.log(error);
       throw new UnauthorizedException('User not logged In nonce');
     }
 

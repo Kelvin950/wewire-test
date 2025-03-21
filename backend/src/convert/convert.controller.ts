@@ -14,7 +14,7 @@ export class ConvertController {
   @UseGuards(AuthGuard)
   @Post()
   Postconvert(@Body() dto: ConvertDto, @GetUser() user: User) {
-    console.log(user);
+    //  console.log(user);
     return this.convertService.Postconvert(dto, user);
   }
 }

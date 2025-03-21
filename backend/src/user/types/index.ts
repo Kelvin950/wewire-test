@@ -2,7 +2,7 @@
 import { Type } from 'class-transformer';
 import { IsOptional, IsInt } from 'class-validator';
 
-export class QueryParams{
+export class QueryParams {
   @IsOptional()
   @Type(() => Number)
   @IsInt()

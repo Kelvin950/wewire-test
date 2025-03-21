@@ -25,13 +25,13 @@ export class NonceService {
 
   async verifyNonce(nonce: string) {
     const value = await this.cacheManager.get<number>(nonce);
-    console.log(value, 212);
+    // console.log(value, 212);
     if (value) {
-      console.log('sd');
+      //   console.log('sd');
       return true; //nonce has already been used
     }
 
-    console.log('wew32');
+    // console.log('wew32');
     await this.cacheManager.set(nonce, Date.now());
     return false;
   }
