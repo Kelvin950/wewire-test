@@ -200,4 +200,17 @@ describe('AppController (e2e)', () => {
       })
       .expect(401);
   });
+
+   it('should return a 429  ', async () => {
+      await request(app.getHttpServer())
+       .get('/nonce')
+       .set('Authorization', `Bearer ${jwt}`)
+     
+       await request(app.getHttpServer())
+         .get('/nonce')
+         .set('Authorization', `Bearer ${jwt}`).expect(429)
+
+
+   
+   });
 });
